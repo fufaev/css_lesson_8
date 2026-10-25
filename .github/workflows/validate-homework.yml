@@ -1,0 +1,85 @@
+name: Homework Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Важно для получения истории изменений
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+
+      - name: Verify file isolation and directory structure
+        run: |
+          ALLOWED_PATTERN="^([^/]+)_([^/]+)_([^/]+)/"
+          VIOLATION=false
+
+          echo "Проверяем измененные файлы..."
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            # Игнорируем изменения в самом GitHub-окружении (если их делает админ)
+            if [[ "$file" =~ ^\.github/ ]]; then
+              continue
+            fi
+
+            # Проверяем, соответствует ли путь шаблону Фамилия_Имя_Группа/
+            if [[ "$file" =~ $ALLOWED_PATTERN ]]; then
+              FOLDER_NAME=$(echo "$file" | cut -d'/' -f1)
+              echo "✅ Файл $file находится в корректной изолированной папке: $FOLDER_NAME"
+            else
+              echo "❌ Ошибка: Файл '$file' изменен вне персональной изолированной папки!"
+              echo "Все ваши файлы должны находиться строго в папке вида 'Фамилия_Имя_Группа'."
+              VIOLATION=true
+            fi
+          done
+
+          if [ "$VIOLATION" = true ]; then
+            exit 1
+          fi
+
+      - name: Check for anti-plagiarism (basic template values override)
+        run: |
+          PLAGIARISM_FOUND=false
+
+          # Ищем все файлы ribbon.css в измененных файлах
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            if [[ "$file" == *"ribbon.css" ]]; then
+              echo "Проверяем кастомизацию в $file..."
+              
+              # Проверка 1: Изменил ли студент стандартный красный цвет ленты
+              if grep -q "#d93131" "$file"; then
+                echo "❌ Ошибка: В файле $file обнаружен стандартный цвет ленты (#d93131). Измените его на свой вариант!"
+                PLAGIARISM_FOUND=true
+              fi
+              
+              # Проверка 2: Изменил ли студент угол наклона в 45 градусов
+              if grep -q "rotate(45deg)" "$file"; then
+                echo "❌ Ошибка: В файле $file обнаружен стандартный угол наклона (45deg). Выберите угол от 30 до 60 градусов!"
+                PLAGIARISM_FOUND=true
+              fi
+            fi
+
+            if [[ "$file" == *"photo1.css" ]]; then
+              echo "Проверяем кастомизацию в $file..."
+              
+              # Проверка 3: Изменил ли студент стандартный масштаб scale(0.8)
+              if grep -q "scale(0.8)" "$file"; then
+                echo "❌ Ошибка: В файле $file обнаружен стандартный масштаб scale(0.8). Установите индивидуальный коэффициент!"
+                PLAGIARISM_FOUND=true
+              fi
+            fi
+          done
+
+          if [ "$PLAGIARISM_FOUND" = true ]; then
+            echo "Автоматическая проверка не пройдена. Пожалуйста, кастомизируйте ваш код согласно условиям вариативности в README.md."
+            exit 1
+          else
+            echo "🎉 Отлично! Базовые проверки на уникальность и изоляцию папок пройдены."
+          fi
