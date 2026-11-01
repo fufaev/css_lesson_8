@@ -1,0 +1,63 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+}
+.ribbon, .cherry, .malina, .smorodina {
+    color: #9ac42c;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    padding: 5px;
+    font-weight: 900;
+    font-family: "Arial", sans-serif;
+}
+.ribbon p, .cherry p, .malina p, .smorodina p {
+    display: inline;
+}
+.ribbon p span, .cherry p span, .malina p span, .smorodina p span {
+    -moz-transform: rotate(40deg);
+    -ms-transform: rotate(40deg);
+    -webkit-transform: rotate(40deg);
+    -o-transform: rotate(40deg);
+    display: inline-block;
+    text-align: center;
+    width: 170px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    background-color: #cc0500;
+    position: absolute;
+    top: 30px;
+    right: -30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), inset 0 5px 30px rgba(255, 255, 255, 0.3);
+}
+.ribbon p::before, .cherry p::before, .malina p::before, .smorodina p::before {
+    content: "";
+    width: 0;
+    position: absolute;
+    height: 0;
+    top: -17px;
+    border-color: transparent transparent #eee transparent;
+    color: #cc0500;
+    z-index: -1;
+    right: 115px;
+    border: 17px solid;
+}
+.ribbon p::after, .cherry p::after, .malina p::after, .smorodina p::after {
+    content: "";
+    width: 0;
+    position: absolute;
+    height: 0;
+    top: 105px;
+    border: 20px solid;
+    z-index: -1;
+    border-color: #eee transparent transparent transparent;
+    right: -10px;
+}
+/*
+Трехмерный эффект создается за счет игры с цветами, их тоном (dorder-color, color) и их расположения относительно 
+родителя через z-index*/
