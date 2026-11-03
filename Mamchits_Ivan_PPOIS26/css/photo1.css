@@ -20,7 +20,7 @@ body {
     vertical-align: middle;
 }
 .hovergallery img {
-    -webkit-transform: scale(0.8);
+    -webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
     -o-transform: scale(0.7);
     -webkit-transition-duration: 0.5s;
@@ -43,5 +43,6 @@ body {
     opacity: 1;
 }
 /*
-Свойство transition-duration при наведении на картинку отвечает за скорость анимации. 
-Чем больше скорость, тем плавнее будет анимация*/
+Свойство transition-duration при наведении на картинку отвечает за скорость анимации, 
+как долго анимация будет переходить из одного в другое состояние. 
+Чем больше скорость, тем плавнее будет анимация.*/
