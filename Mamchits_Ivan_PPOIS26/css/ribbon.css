@@ -40,12 +40,11 @@ body {
     width: 0;
     position: absolute;
     height: 0;
-    top: -17px;
-    border-color: transparent transparent #eee transparent;
-    color: #cc0500;
-    z-index: -1;
-    right: 115px;
+    top: -30px;
     border: 17px solid;
+    border-color: transparent transparent #8b3434 transparent;
+    z-index: -1;
+    right: 111px;
 }
 .ribbon p::after, .cherry p::after, .malina p::after, .smorodina p::after {
     content: "";
@@ -55,7 +54,7 @@ body {
     top: 105px;
     border: 20px solid;
     z-index: -1;
-    border-color: #eee transparent transparent transparent;
+    border-color: #8b3434 transparent transparent transparent;
     right: -10px;
 }
 /*
