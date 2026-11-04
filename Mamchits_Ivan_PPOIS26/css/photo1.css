@@ -1,0 +1,48 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    scroll-behavior: smooth;
+    text-rendering: optimizeSpeed;
+}
+.hovergallery {
+    display: block;
+}
+.hovergallery a {
+    display: inline-block;
+    padding-left: 1.6%;
+    padding-top: 1.5%;
+    padding-right: 0.7%;
+    width: 24.5%;
+    height: 16.7%;
+    vertical-align: middle;
+}
+.hovergallery img {
+    -webkit-transform: scale(0.7);
+    -moz-transform: scale(0.7);
+    -o-transform: scale(0.7);
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
+    float: left;
+}
+.hovergallery img:hover {
+    -webkit-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    -o-transform: scale(1.3);
+    box-shadow: 10px 10px 10px #1e386a;
+    -webkit-box-shadow: 10px 10px 10px #1e386a;
+    -moz-box-shadow: 10px 10px 10px #1e386a;
+    opacity: 1;
+}
+/*
+Свойство transition-duration при наведении на картинку отвечает за скорость анимации, 
+как долго анимация будет переходить из одного в другое состояние. 
+Чем больше скорость, тем плавнее будет анимация.*/
